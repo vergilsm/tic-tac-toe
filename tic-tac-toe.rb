@@ -31,7 +31,7 @@ game.field
 		game.field # Вывожу игровое поле на экран
 		game.player_vs_comp
 		# Если юзер выбрал нолики
-		else
+    else
 		show.cls
 		game.field
 		game.comp_vs_player

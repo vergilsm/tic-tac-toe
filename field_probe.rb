@@ -1,4 +1,11 @@
+if (Gem.win_platform?) # если винда
+    Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+    Encoding.default_internal = __ENCODING__
 
+    [STDIN, STDOUT].each do |io|
+        io.set_encoding(Encoding.default_external, Encoding.default_internal)
+    end
+end
 # Объявляю пустой массив для записи в него всех строк файла
 all_lines_field = []
 player_moves = []
