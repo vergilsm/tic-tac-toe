@@ -1,2 +1,4 @@
 .idea
 files_txt/construction.txt
+*.md
+*.txt
