@@ -7,26 +7,26 @@ class Game
     # Массив для записи ходов компьютера
     @comp_moves = []
     # хеш всех ходов для проверки пользователя.
-    @all_moves = {1 => "x1 y1", 2 => "x2 y1", 3 =>"x3 y1", 4 => "x1 y2", 5 => "x2 y2",
-                 6 => "x3 y2", 7 => "x1 y3", 8 => "x2 y3", 9 => "x3 y3"}
+    @all_moves = {1 => "x1 y1", 2 => "x2 y1", 3 => "x3 y1", 4 => "x1 y2", 5 => "x2 y2",
+                  6 => "x3 y2", 7 => "x1 y3", 8 => "x2 y3", 9 => "x3 y3"}
     # хеш с выигрышными комбинациями
-    @positions_wins = {1=> [1,2,3], 2=> [4,5,6], 3=> [7,8,9], 4=> [1,4,7],
-                      5=> [2,5,8], 6=> [3,6,9], 7=> [1,5,9], 8=> [3,5,7]}
+    @positions_wins = {1 => [1, 2, 3], 2 => [4, 5, 6], 3 => [7, 8, 9], 4 => [1, 4, 7],
+                       5 => [2, 5, 8], 6 => [3, 6, 9], 7 => [1, 5, 9], 8 => [3, 5, 7]}
   end
 
   # Метод хранящий игровое поле и поле, для красоты выводимое на экран
   def field
-    # Путь к файлу
+
     current_path = File.dirname(__FILE__)
-    # Имя файла
-    p_f = current_path + '/files_txt/playing_field.txt'
-    # Проверка на существование файла
+
+    p_f = current_path + '/../templates/playing_field.txt'
+
     if File.exist?(p_f)
-      # Открываю файл
+
       playing_field = File.open(p_f, "r:UTF-8")
-      # Записываю построчно файл в массив
+
       @all_lines_field = playing_field.readlines
-      # Закрываю файл
+
       playing_field.close
       # Возвращаю наглядное поле
       # Создаю клон поля и удаляю из него все #
@@ -44,7 +44,7 @@ class Game
     else
       puts 'Файл не найден.'
     end
-  end # Финал метода field
+  end
 
   def move_player(move_player)
 
@@ -89,6 +89,7 @@ class Game
 
     puts field_new
   end
+
   # Метод показывает варианты выигрыша
   def win(comp_or_player)
     # Прохожусь по выигрышным массивам
@@ -108,6 +109,7 @@ class Game
       end
     end
   end
+
   # гетеры
   def all_moves
     @all_moves
