@@ -17,7 +17,7 @@ class Screensaver
       puts
       puts show_move
       # Оставляю заставку на 3 секунды
-      sleep 3
+      sleep 2
     else
       puts "Файл не найден."
     end

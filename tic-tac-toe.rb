@@ -15,7 +15,7 @@ require "unicode_utils/downcase"
 
 show = Screensaver.new
 game = Game.new
-ii = Comp_ii.new
+ii = CompII.new
 
 show.show_screen # Вывожу заставку на экран
 show.cls
@@ -58,20 +58,19 @@ while game.player_moves.size != 5
   game.win(game.player_moves)
 
   puts "Ход компьютера."
-  comp_move = ii.comp_ii(game.player_moves)
+  comp_move = ii.comp_move(game.player_moves)
   # Пока ходы компа будут совподать с уже сделанными ходами
   while game.comp_moves.include?(comp_move) ||
       game.player_moves.include?(comp_move) do
     # комп будет искать вариант хода
-    comp_move = ii.comp_ii(game.player_moves)
+    comp_move = ii.comp_move(game.player_moves)
   end
   # Вывожу ход компа на игровое поле
   game.move_comp(comp_move)
   # проверяю не выиграл ли комп на этом ходу
   game.win(game.comp_moves)
-  # Если юзер походил 4 раза и не выиграл, то продолжать
-  # дальше смысла нет
-  if game.player_moves.size == 4
+
+  if game.player_moves.size == 5
     puts 'Ничья'
     abort
   end
