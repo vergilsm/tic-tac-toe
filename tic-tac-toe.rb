@@ -40,7 +40,7 @@ while game.player_moves.size != 5
     when 'x3 y1'
       move_player = 3
     when 'x1 y2'
-      move_player =4
+      move_player = 4
     when 'x2 y2'
       move_player = 5
     when 'x3 y2'
