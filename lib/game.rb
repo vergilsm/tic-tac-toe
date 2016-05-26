@@ -1,109 +1,73 @@
 class Game
   def initialize
-    # Объявляю пустой массив для записи в него всех строк файла
-    @all_lines_field = []
     # Массив для записи ходов юзера
     @player_moves = []
     # Массив для записи ходов компьютера
     @comp_moves = []
-    # хеш всех ходов для проверки пользователя.
-    @all_moves = {1 => "x1 y1", 2 => "x2 y1", 3 => "x3 y1", 4 => "x1 y2", 5 => "x2 y2",
-                  6 => "x3 y2", 7 => "x1 y3", 8 => "x2 y3", 9 => "x3 y3"}
-    # хеш с выигрышными комбинациями
-    @positions_wins = {1 => [1, 2, 3], 2 => [4, 5, 6], 3 => [7, 8, 9], 4 => [1, 4, 7],
-                       5 => [2, 5, 8], 6 => [3, 6, 9], 7 => [1, 5, 9], 8 => [3, 5, 7]}
   end
 
-  # Метод хранящий игровое поле и поле, для красоты выводимое на экран
-  def field
+  # хеш всех ходов для проверки пользователя.
+  ALL_MOVES = {1 => "x1 y1", 2 => "x2 y1", 3 => "x3 y1", 4 => "x1 y2", 5 => "x2 y2",
+               6 => "x3 y2", 7 => "x1 y3", 8 => "x2 y3", 9 => "x3 y3"}
+  # Массив с выигрышными комбинациями
+  POSITIONS_WINS = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
 
-    current_path = File.dirname(__FILE__)
+  def show_player_move(player_move, all_lines_field)
 
-    p_f = current_path + '/../templates/playing_field.txt'
+    @player_moves << player_move
 
-    if File.exist?(p_f)
+    l2 = all_lines_field[2].sub(player_move.to_s, "X")
+    l6 = all_lines_field[6].sub(player_move.to_s, "X")
+    l10 = all_lines_field[10].sub(player_move.to_s, "X")
+    all_lines_field[2] = l2
+    all_lines_field[6] = l6
+    all_lines_field[10] = l10
 
-      playing_field = File.open(p_f, "r:UTF-8")
+    field_new = Array.new(all_lines_field)
+    line2 = field_new[2].sub(player_move.to_s, 'X').gsub(/[123]/, ' ')
+    line6 = field_new[6].sub(player_move.to_s, 'X').gsub(/[456]/, ' ')
+    line10 = field_new[10].sub(player_move.to_s, 'X').gsub(/[789]/, ' ')
+    field_new[2] = line2
+    field_new[6] = line6
+    field_new[10] = line10
 
-      @all_lines_field = playing_field.readlines
+    puts field_new
+  end
 
-      playing_field.close
-      # Возвращаю наглядное поле
-      # Создаю клон поля и удаляю из него все #
-      clone_all_lines = @all_lines_field.clone
-      line2 = clone_all_lines[2].gsub(/[123]/, ' ')
-      clone_all_lines[2] = line2
+  def show_comp_move(comp_move, all_lines_field)
 
-      line6 = clone_all_lines[6].gsub(/[456]/, ' ')
-      clone_all_lines[6] = line6
+    @comp_moves << comp_move
 
-      line10 = clone_all_lines[10].gsub(/[789]/, ' ')
-      clone_all_lines[10] = line10
-      # Вывожу поле без # на экран
-      puts clone_all_lines
-    else
-      puts 'Файл не найден.'
+    l2 = all_lines_field[2].sub(comp_move.to_s, "O")
+    l6 = all_lines_field[6].sub(comp_move.to_s, "O")
+    l10 = all_lines_field[10].sub(comp_move.to_s, "O")
+    all_lines_field[2] = l2
+    all_lines_field[6] = l6
+    all_lines_field[10] = l10
+
+    field_new = Array.new(all_lines_field)
+    line2 = field_new[2].sub(comp_move.to_s, 'O').gsub(/[123]/, ' ')
+    line6 = field_new[6].sub(comp_move.to_s, 'O').gsub(/[456]/, ' ')
+    line10 = field_new[10].sub(comp_move.to_s, 'O').gsub(/[789]/, ' ')
+    field_new[2] = line2
+    field_new[6] = line6
+    field_new[10] = line10
+
+    puts field_new
+  end
+
+  def player_won?
+    POSITIONS_WINS.each do |win|
+      if win - @player_moves.sort == []
+        puts "Вы выиграли!"
+        abort
+      end
     end
   end
 
-  def move_player(move_player)
-
-    @player_moves << move_player
-
-    l2 = @all_lines_field[2].sub(move_player.to_s, "X")
-    l6 = @all_lines_field[6].sub(move_player.to_s, "X")
-    l10 = @all_lines_field[10].sub(move_player.to_s, "X")
-    @all_lines_field[2] = l2
-    @all_lines_field[6] = l6
-    @all_lines_field[10] = l10
-
-    field_new = Array.new(@all_lines_field)
-    line2 = field_new[2].sub(move_player.to_s, 'X').gsub(/[123]/, ' ')
-    line6 = field_new[6].sub(move_player.to_s, 'X').gsub(/[456]/, ' ')
-    line10 = field_new[10].sub(move_player.to_s, 'X').gsub(/[789]/, ' ')
-    field_new[2] = line2
-    field_new[6] = line6
-    field_new[10] = line10
-
-    puts field_new
-  end
-
-  def move_comp(move_comp)
-
-    @comp_moves << move_comp
-
-    l2 = @all_lines_field[2].sub(move_comp.to_s, "O")
-    l6 = @all_lines_field[6].sub(move_comp.to_s, "O")
-    l10 = @all_lines_field[10].sub(move_comp.to_s, "O")
-    @all_lines_field[2] = l2
-    @all_lines_field[6] = l6
-    @all_lines_field[10] = l10
-
-    field_new = Array.new(@all_lines_field)
-    line2 = field_new[2].sub(move_comp.to_s, 'O').gsub(/[123]/, ' ')
-    line6 = field_new[6].sub(move_comp.to_s, 'O').gsub(/[456]/, ' ')
-    line10 = field_new[10].sub(move_comp.to_s, 'O').gsub(/[789]/, ' ')
-    field_new[2] = line2
-    field_new[6] = line6
-    field_new[10] = line10
-
-    puts field_new
-  end
-
-  # Метод показывает варианты выигрыша
-  def win(comp_or_player)
-    # Прохожусь по выигрышным массивам
-    @positions_wins.each_value do |win|
-      # Если вместо атрибута метода будет выбран, массив ходов юзера
-      # и если одно из значений(массив выигрышных комбинаций) минус
-      # @player_moves будет равно []
-      if comp_or_player == @player_moves &&
-          win - comp_or_player == []
-        puts "Вы выиграли!"
-        abort
-
-      elsif comp_or_player == @comp_moves &&
-          win - comp_or_player == []
+  def comp_won?
+    POSITIONS_WINS.each do |win|
+      if win - @comp_moves.sort == []
         puts "Выиграл компьютер."
         abort
       end
@@ -112,7 +76,7 @@ class Game
 
   # гетеры
   def all_moves
-    @all_moves
+    ALL_MOVES
   end
 
   def player_moves
