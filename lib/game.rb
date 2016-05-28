@@ -56,18 +56,18 @@ class Game
     puts field_new
   end
 
-  def player_won?
+  def player_won?(player_moves)
     POSITIONS_WINS.each do |win|
-      if win - @player_moves.sort == []
+      if win - player_moves == []
         puts "Вы выиграли!"
         abort
       end
     end
   end
 
-  def comp_won?
+  def comp_won?(comp_moves)
     POSITIONS_WINS.each do |win|
-      if win - @comp_moves.sort == []
+      if win - comp_moves == []
         puts "Выиграл компьютер."
         abort
       end

@@ -57,7 +57,7 @@ while game.player_moves.size != 5
   # Вывожу ход юзера на игровое поле
   game.show_player_move(player_move, show_field.all_lines_field)
   # проверяю не выиграл ли юзер на этом ходу
-  game.player_won?
+  game.player_won?(game.player_moves)
 
   puts "Ход компьютера."
   comp_move = ii.comp_move(game.player_moves)
@@ -70,7 +70,7 @@ while game.player_moves.size != 5
   # Вывожу ход компа на игровое поле
   game.show_comp_move(comp_move, show_field.all_lines_field)
   # проверяю не выиграл ли комп на этом ходу
-  game.comp_won?
+  game.comp_won?(game.comp_moves)
 
   if game.player_moves.size == 5
     puts 'Ничья'
