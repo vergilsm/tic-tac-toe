@@ -33,8 +33,43 @@ class ShowField
     end
   end
 
-  def all_lines_field
-    @all_lines_field
+  def show_player_move(player_move)
+
+    l2 = @all_lines_field[2].sub(player_move.to_s, "X")
+    l6 = @all_lines_field[6].sub(player_move.to_s, "X")
+    l10 = @all_lines_field[10].sub(player_move.to_s, "X")
+    @all_lines_field[2] = l2
+    @all_lines_field[6] = l6
+    @all_lines_field[10] = l10
+
+    field_new = Array.new(@all_lines_field)
+    line2 = field_new[2].sub(player_move.to_s, 'X').gsub(/[123]/, ' ')
+    line6 = field_new[6].sub(player_move.to_s, 'X').gsub(/[456]/, ' ')
+    line10 = field_new[10].sub(player_move.to_s, 'X').gsub(/[789]/, ' ')
+    field_new[2] = line2
+    field_new[6] = line6
+    field_new[10] = line10
+
+    puts field_new
   end
 
+  def show_comp_move(comp_move)
+
+    l2 = @all_lines_field[2].sub(comp_move.to_s, "O")
+    l6 = @all_lines_field[6].sub(comp_move.to_s, "O")
+    l10 = @all_lines_field[10].sub(comp_move.to_s, "O")
+    @all_lines_field[2] = l2
+    @all_lines_field[6] = l6
+    @all_lines_field[10] = l10
+
+    field_new = Array.new(@all_lines_field)
+    line2 = field_new[2].sub(comp_move.to_s, 'O').gsub(/[123]/, ' ')
+    line6 = field_new[6].sub(comp_move.to_s, 'O').gsub(/[456]/, ' ')
+    line10 = field_new[10].sub(comp_move.to_s, 'O').gsub(/[789]/, ' ')
+    field_new[2] = line2
+    field_new[6] = line6
+    field_new[10] = line10
+
+    puts field_new
+  end
 end

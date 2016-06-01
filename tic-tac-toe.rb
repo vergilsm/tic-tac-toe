@@ -21,11 +21,11 @@ ii = CompII.new
 
 show.show_screen # Вывожу заставку на экран
 show.cls
-# Вывожу игровое поле на экран
+
 show_field.field
 # пока пользователь не сделал 5 ходов
 while game.player_moves.size != 5
-  # Прошу пользователя сделать ход
+
   puts "\n\rСделайте ваш ход. (Как делать ход: x1 y1 и Enter)\n"
   player_move = STDIN.gets.chomp.downcase
   # Проверка, чтобы юзер не ввел ерунду
@@ -55,11 +55,17 @@ while game.player_moves.size != 5
     player_move = 9
   end
   # Вывожу ход юзера на игровое поле
-  game.show_player_move(player_move, show_field.all_lines_field)
+  show_field.show_player_move(player_move)
+  game.add_player_move(player_move)
   # проверяю не выиграл ли юзер на этом ходу
   game.player_won?(game.player_moves)
 
-  puts "Ход компьютера."
+  if game.player_moves.size == 5
+    puts 'Ничья'
+    abort
+  end
+
+  puts 'Ход компьютера.'
   comp_move = ii.comp_move(game.player_moves)
   # Пока ходы компа будут совподать с уже сделанными ходами
   while game.comp_moves.include?(comp_move) ||
@@ -68,13 +74,10 @@ while game.player_moves.size != 5
     comp_move = ii.comp_move(game.player_moves)
   end
   # Вывожу ход компа на игровое поле
-  game.show_comp_move(comp_move, show_field.all_lines_field)
+  show_field.show_comp_move(comp_move)
+  game.add_comp_move(comp_move)
   # проверяю не выиграл ли комп на этом ходу
   game.comp_won?(game.comp_moves)
 
-  if game.player_moves.size == 5
-    puts 'Ничья'
-    abort
-  end
 end
 	
