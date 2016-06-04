@@ -1,4 +1,7 @@
 class Game
+
+  attr_reader :player_moves, :comp_moves
+
   def initialize
     # Массив для записи ходов юзера
     @player_moves = []
@@ -23,8 +26,7 @@ class Game
   def player_won?(player_moves)
     POSITIONS_WINS.each do |win|
       if win - player_moves == []
-        puts "Вы выиграли!"
-        abort
+        return true
       end
     end
   end
@@ -32,22 +34,13 @@ class Game
   def comp_won?(comp_moves)
     POSITIONS_WINS.each do |win|
       if win - comp_moves == []
-        puts "Выиграл компьютер."
-        abort
+        return true
       end
     end
   end
 
-  # гетеры
   def all_moves
     ALL_MOVES
   end
 
-  def player_moves
-    @player_moves
-  end
-
-  def comp_moves
-    @comp_moves
-  end
-end # Финал класса
+end
