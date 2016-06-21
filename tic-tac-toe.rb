@@ -22,7 +22,7 @@ ii = CompII.new
 show.show_screen # Вывожу заставку на экран
 show.cls
 
-show_field.show_field(show_field.read_file)
+show_field.show_move(show_field.read_file, '', '')
 # пока пользователь не сделал 5 ходов
 while game.player_moves.size != 5
 
@@ -55,7 +55,7 @@ while game.player_moves.size != 5
     player_move = 9
   end
   # Вывожу ход юзера на игровое поле
-  show_field.show_move(player_move, 'X')
+  show_field.show_move(show_field.pattern_field, player_move, 'X')
   game.add_player_move(player_move)
   # проверяю не выиграл ли юзер на этом ходу
   if game.player_won?(game.player_moves) == true
@@ -71,7 +71,7 @@ while game.player_moves.size != 5
   puts 'Ход компьютера.'
   comp_move = ii.comp_move(game.player_moves)
   # Вывожу ход компа на игровое поле
-  show_field.show_move(comp_move, 'O')
+  show_field.show_move(show_field.pattern_field, comp_move, 'O')
   game.add_comp_move(comp_move)
   # проверяю не выиграл ли комп на этом ходу
   if game.comp_won?(game.comp_moves) == true
