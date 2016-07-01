@@ -12,26 +12,26 @@ require_relative 'lib/show_field.rb'
 require_relative 'lib/game.rb'
 require_relative 'lib/comp_ii'
 
-require "unicode_utils/downcase"
+require 'unicode_utils/downcase'
 
 show = Screensaver.new
 show_field = ShowField.new
 game = Game.new
 ii = CompII.new
 
-show.show_screen # Вывожу заставку на экран
+show.show_screen
 show.cls
 
 show_field.show_move(show_field.read_file, '', '')
-# пока пользователь не сделал 5 ходов
+
 while game.player_moves.size != 5
 
   puts "\n\rСделайте ваш ход. (Как делать ход: x1 y1 и Enter)\n"
-  player_move = STDIN.gets.chomp.downcase
+  player_move = $stdin.gets.chomp.downcase
   # Проверка, чтобы юзер не ввел ерунду
-  while !game.all_moves.value?(player_move) do
+  until game.all_moves.value?(player_move)
     puts "\nСделайте ваш ход. (Как делать ход: x1 y1 и Enter)\n"
-    player_move = STDIN.gets.chomp.downcase
+    player_move = $stdin.gets.chomp.downcase
   end
 
   case player_move
@@ -54,12 +54,12 @@ while game.player_moves.size != 5
   when 'x3 y3'
     player_move = 9
   end
-  # Вывожу ход юзера на игровое поле
+
   show_field.show_move(show_field.pattern_field, player_move, 'X')
   game.add_player_move(player_move)
-  # проверяю не выиграл ли юзер на этом ходу
+
   if game.player_won?(game.player_moves) == true
-    puts "Вы выиграли!"
+    puts 'Вы выиграли!'
     abort
   end
 
@@ -70,14 +70,12 @@ while game.player_moves.size != 5
 
   puts 'Ход компьютера.'
   comp_move = ii.comp_move(game.player_moves)
-  # Вывожу ход компа на игровое поле
+
   show_field.show_move(show_field.pattern_field, comp_move, 'O')
   game.add_comp_move(comp_move)
-  # проверяю не выиграл ли комп на этом ходу
+
   if game.comp_won?(game.comp_moves) == true
-    puts "Выиграл компьютер."
+    puts 'Выиграл компьютер.'
     abort
   end
-
 end
-	
