@@ -27,33 +27,14 @@ show_field.show_move(show_field.read_file, '', '')
 while game.player_moves.size != 5
 
   puts "\n\rСделайте ваш ход. (Как делать ход: x1 y1 и Enter)\n"
-  player_move = $stdin.gets.chomp.downcase
+  player_input = $stdin.gets.chomp.downcase
   # Проверка, чтобы юзер не ввел ерунду
-  until game.all_moves.value?(player_move)
+  until game.all_moves.value?(player_input)
     puts "\nСделайте ваш ход. (Как делать ход: x1 y1 и Enter)\n"
-    player_move = $stdin.gets.chomp.downcase
+    player_input = $stdin.gets.chomp.downcase
   end
 
-  case player_move
-  when 'x1 y1'
-    player_move = 1
-  when 'x2 y1'
-    player_move = 2
-  when 'x3 y1'
-    player_move = 3
-  when 'x1 y2'
-    player_move = 4
-  when 'x2 y2'
-    player_move = 5
-  when 'x3 y2'
-    player_move = 6
-  when 'x1 y3'
-    player_move = 7
-  when 'x2 y3'
-    player_move = 8
-  when 'x3 y3'
-    player_move = 9
-  end
+  player_move = Game::ALL_MOVES.invert[player_input]
 
   show_field.show_move(show_field.pattern_field, player_move, 'X')
   game.add_player_move(player_move)

@@ -15,6 +15,7 @@ class ShowField
     end
     @pattern_field
   end
+
   # Метод выводящий на экран игровое поле с ходами игроков
   def show_move(pattern_field, move, symbol)
     l2 = pattern_field[2].sub(move.to_s, symbol)
